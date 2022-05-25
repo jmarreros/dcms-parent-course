@@ -1,0 +1,65 @@
+#message.notice {
+  padding: 10px;
+}
+
+.msg-btn {
+  margin-top: 5px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.msg-wp {
+  margin-top: 15px !important;
+  margin-bottom: 0 !important;
+  background-color: white;
+  padding: 10px !important;
+  border: 1px solid #c3c4c7;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.msg-wp.info {
+  border-left-width: 4px;
+  border-left-color: #72aee6;
+}
+
+.msg-wp.success {
+  border-left-width: 4px;
+  border-left-color: #00a32a;
+}
+
+.msg-wp.error {
+	border-left-width: 4px;
+	border-left-color: #d63638;
+}
+
+body .hidden,
+body .hide {
+  display: none;
+}
+
+  /* CSS spin*/
+
+.dcms-spin {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+}
+.dcms-spin:after {
+  content: " ";
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 5px;
+  border-radius: 50%;
+  border: 2px solid #646970;
+  border-color: #646970 transparent #646970 transparent;
+  animation: dcms-spin 1.2s linear infinite;
+}
+@keyframes dcms-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
