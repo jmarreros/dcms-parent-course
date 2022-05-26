@@ -35,6 +35,7 @@ final class Loader{
 		define ('DCMS_PARENT_URL', plugin_dir_url( __FILE__ ));
 		define ('DCMS_PARENT_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_PARENT_SUBMENU', 'options-general.php');
+		define ('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES', 'dcms-parent-product-multi-prices');
 	}
 
 	// Load all the files we need
@@ -43,8 +44,11 @@ final class Loader{
 		include_once ( DCMS_PARENT_PATH . '/includes/plugin.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/submenu.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/enqueue.php');
+		include_once ( DCMS_PARENT_PATH . '/includes/database.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/configuration.php');
 
+    // Front-end
+		include_once ( DCMS_PARENT_PATH . '/front-end/courses-product.php');
 	}
 
 	// Load tex domain

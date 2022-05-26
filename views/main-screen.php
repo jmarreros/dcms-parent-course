@@ -27,6 +27,7 @@ echo '</h2>';
 // Partials
 switch ($current_tab){
     case 'config':
+        $id_product = get_option(DCMS_PARENT_ID_PRODUCT_MULTI_PRICES);
         include_once('partials/config.php');
         break;
     case 'advanced':

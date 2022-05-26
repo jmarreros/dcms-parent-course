@@ -15,11 +15,13 @@ class Configuration{
     $nonce = $_POST['nonce']??'';
     Helper::validate_nonce($nonce, 'ajax-nonce-parent');
 
-    // update_option(DCMS_PARENT_CONFIG_URLS, $urls);
+    $id_product = intval($_POST['id_product']??0);
+
+    update_option(DCMS_PARENT_ID_PRODUCT_MULTI_PRICES, $id_product);
 
     $res = [
       'status' => 1,
-      'message' => 'Se guardaron correctamente los datos'
+      'message' => 'Se guardaron correctamente los datos '
       ];
 
     echo json_encode($res);

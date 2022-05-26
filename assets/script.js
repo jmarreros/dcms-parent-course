@@ -2,10 +2,10 @@
 	'use strict';
 
   // Save cron syn advanced configuration
-  $('#product-id .button').click(function(e){
+  $('#id-product-section .button').click(function(e){
     e.preventDefault();
 
-    let id_product = $('#id').val();
+    const id_product = $('#id-product').val();
 
     $.ajax({
         url : dcms_parent.ajaxurl,
@@ -17,18 +17,18 @@
             id_product,
         },
         beforeSend: function(){
-            $('#product-id .button').prop('disabled', true);
-            $('#product-id .msg-btn').text('Enviando...');
-            $('#product-id .dcms-spin').removeClass('hide');
+            $('#id-product-section .button').prop('disabled', true);
+            $('#id-product-section .msg-btn').text('Enviando...');
+            $('#id-product-section .dcms-spin').removeClass('hide');
         }
     })
     .done( function(res) {
         console.log(res);
-        $('#product-id .msg-btn').text(res.message);
+        $('#id-product-section .msg-btn').text(res.message);
     })
     .always(function(){
-        $('#product-id .button').prop('disabled', false);
-        $('#product-id .dcms-spin').addClass('hide');
+        $('#id-product-section .button').prop('disabled', false);
+        $('#id-product-section .dcms-spin').addClass('hide');
     });
   });
 

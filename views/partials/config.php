@@ -1,13 +1,16 @@
+<?php
+// $id_product
+?>
 <section id="section-config">
     <br>
-    <table class="form-table product-id">
+    <table class="form-table id-product-section">
             <tbody>
-                <tr id="product-id">
+                <tr id="id-product-section">
                     <th scope="row">
                         <?php _e('ID de producto precio variable','dcms-parent-course') ?>
                     </th>
                     <td>
-                        <input type="number" id="id-product" name="id-product">
+                        <input type="number" id="id-product" name="id-product" value="<?= $id_product ?>">
                         <button class="button button-primary">
                             <?php _e('Save', 'dcms-parent-course'); ?>
                         </button>
