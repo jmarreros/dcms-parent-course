@@ -2,6 +2,7 @@
 // Muestra la lista de cursos en el producto de pago flexible (DCMS_PARENT_ID_PRODUCT_MULTI_PRICES)
 // Guarda el curso seleccionado como parte de la orden
 
+use dcms\parent\helpers\Helper;
 use dcms\parent\includes\Database;
 
 // Mostramos el control de selección de cursos en el producto con precios flexibles
@@ -60,6 +61,27 @@ function display_custom_cart_item_data( $cart_data, $cart_item ) {
 // Para guardar los datos en el ítem de producto y que se muestren en las órdenes del backend
 add_action( 'woocommerce_new_order_item', 'dcms_save_new_order_item', 10, 3 );
 function dcms_save_new_order_item( $item_id, $item, $order_id ) {
-  wc_add_order_item_meta($item_id, 'Curso-id',  $item->legacy_values['dcms-course']['course_id']);
-  wc_add_order_item_meta($item_id, 'Curso-nombre',  $item->legacy_values['dcms-course']['course_name']);
+
+  $course_id = $item->legacy_values['dcms-course']['course_id']??0;
+  $course_name = $item->legacy_values['dcms-course']['course_name']??'';
+
+  if ( !$course_id ) return;
+
+  wc_add_order_item_meta($item_id, 'curso_id', $course_id);
+  wc_add_order_item_meta($item_id, 'curso_nombre', $course_name);
+
+  // Add metadata price and currency course
+  $db = new Database;
+
+  $default_currency = Helper::get_default_currency();
+  $id_product = $db->get_id_product_from_course($course_id);
+
+  $price = 0;
+  if ( $id_product ){
+    $product = wc_get_product( $id_product );
+    if ( $product ) $price = $product->get_price();
+  }
+
+  wc_add_order_item_meta($item_id, 'curso_precio', $price);
+  wc_add_order_item_meta($item_id, 'curso_moneda', $default_currency);
 };

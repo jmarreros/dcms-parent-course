@@ -24,4 +24,14 @@ class Database{
 
       return $this->wpdb->get_row($sql);
     }
+
+
+    // Get product id from course id
+    public function get_id_product_from_course( $id_course ){
+      $sql = "SELECT meta_value id_product
+              FROM {$this->wpdb->prefix}postmeta
+              WHERE post_id = {$id_course} AND meta_key = 'stm_lms_product_id' LIMIT 1";
+      return $this->wpdb->get_var($sql);
+    }
+
 }

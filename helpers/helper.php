@@ -27,4 +27,11 @@ class Helper{
 
     return join(',', $result_array);
   }
+
+  // Multicurrency support default course price
+  public static function get_default_currency(){
+    $data = get_option('woo_multi_currency_params');
+    return $data['currency_default']??'USD';
+  }
+
 }
