@@ -1,4 +1,5 @@
 <?php
+use dcms\parent\includes\Database;
 
 // Validations
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -6,10 +7,11 @@ if ( ! current_user_can( 'manage_options' ) ) return; // only administrator
 
 // Tabs definitions
 $plugin_tabs = Array();
+$plugin_tabs['list'] = __('List courses with modules', 'dcms-parent-course');
 $plugin_tabs['config'] = __('Configuration', 'dcms-parent-course');
 $plugin_tabs['advanced'] = __('Advanced', 'dcms-parent-course');
 
-$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'config';
+$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'list';
 
 // Interfaz header
 echo "<div class='wrap'>"; //start wrap
@@ -26,6 +28,11 @@ echo '</h2>';
 
 // Partials
 switch ($current_tab){
+    case 'list':
+        $db = new Database;
+        $courses_modules = $db->list_courses_and_modules();
+        include_once('partials/list-parents.php');
+        break;
     case 'config':
         $id_product = get_option(DCMS_PARENT_ID_PRODUCT_MULTI_PRICES);
         include_once('partials/config.php');

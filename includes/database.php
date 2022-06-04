@@ -17,7 +17,6 @@ class Database{
               WHERE post_type = 'stm-courses'
                 AND post_parent = 0
                 AND post_status = 'publish'
-                AND post_title NOT LIKE 'Módulo%'
               ORDER BY post_title";
 
       return $this->wpdb->get_results($sql);
@@ -54,7 +53,24 @@ class Database{
       return $this->wpdb->query($sql);
     }
 
-    // TODO
     // Get parent for a specific module ID
+    public function get_parent_course($id_module){
+      $sql = "SELECT post_parent
+              FROM {$this->wpdb->posts}
+              WHERE ID = {$id_module}";
 
+      return $this->wpdb->get_var($sql);
+    }
+
+    public function list_courses_and_modules(){
+      $sql = "SELECT pp.ID course_id, pp.post_title course_title,
+                    pm.ID module_id, pm.post_title module_title
+              FROM {$this->wpdb->posts} pp
+              INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
+              WHERE pp.post_type = 'stm-courses'
+                    AND pm.post_type = 'stm-courses'
+              ORDER BY course_title, module_title";
+
+      return $this->wpdb->get_results($sql);
+    }
 }

@@ -1,3 +1,11 @@
+.dcms-table-report{
+  width: 100%;
+}
+
+.dcms-table-report td{
+  padding:4px;
+}
+
 #message.notice {
   padding: 10px;
 }

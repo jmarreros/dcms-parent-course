@@ -23,13 +23,13 @@ function dcms_add_metabox_parent_content( $post ){
   }
   $db = new Database;
   $courses = $db->get_courses();
-
+  $parent_id = $db->get_parent_course($post->ID);
   ?>
   <br>
     <select name="parent-course">
       <option value="">Ninguno</option>
       <?php foreach ($courses as $course): ?>
-        <option value="<?= $course->ID ?>"><?= $course->post_title ?></option>
+        <option value="<?= $course->ID ?>" <?php selected($parent_id, $course->ID) ?> ><?= $course->post_title ?></option>
       <?php endforeach; ?>
     </select>
   <?php
