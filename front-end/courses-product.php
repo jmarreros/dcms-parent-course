@@ -65,7 +65,7 @@ function dcms_save_new_order_item( $item_id, $item, $order_id ) {
   $course_id = $item->legacy_values['dcms-course']['course_id']??0;
   $course_name = $item->legacy_values['dcms-course']['course_name']??'';
 
-  if ( !$course_id ) return;
+  if ( ! $course_id ) return;
 
   wc_add_order_item_meta($item_id, 'curso_id', $course_id);
   wc_add_order_item_meta($item_id, 'curso_nombre', $course_name);
