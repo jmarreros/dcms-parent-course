@@ -62,6 +62,7 @@ class Database{
       return $this->wpdb->get_var($sql);
     }
 
+    // List courses with modules
     public function list_courses_and_modules(){
       $sql = "SELECT pp.ID course_id, pp.post_title course_title,
                     pm.ID module_id, pm.post_title module_title
@@ -73,4 +74,47 @@ class Database{
 
       return $this->wpdb->get_results($sql);
     }
+
+
+    // Add user to course
+    public function add_user_course($id_user, $id_course){
+      $sql = "INSERT INTO {$this->wpdb->prefix}stm_lms_user_courses
+            (`user_id`, `course_id`, `status`, `progress_percent`, `start_time`, `current_lesson_id`)
+            VALUES ({$id_user}, {$id_course}, 'enrolled', 0, UNIX_TIMESTAMP(), 0)";
+
+      return $this->wpdb->query($sql);
+    }
+
+    // Search ids modules by course
+    public function get_modules_by_course($id_course){
+      $sql = "SELECT pm.ID module_id
+              FROM {$this->wpdb->posts} pp
+              INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
+              WHERE pp.ID = {$id_course} 
+              AND pp.post_type = 'stm-courses'
+              AND pm.post_type = 'stm-courses'";
+
+      return $this->wpdb->get_col($sql);
+    }
+
+    // Validate if a usar has a specific module assigned
+    public function user_has_module($id_user, $id_module){
+      $sql = "SELECT count(user_course_id) 
+              FROM {$this->wpdb->prefix}stm_lms_user_courses 
+              WHERE user_id = {$id_user} AND course_id = {$id_module}";
+
+      return $this->wpdb->get_var($sql);
+    }
+
+    // Remove course modules for a user
+    public function remove_modules_user($id_user, $arr_modules){
+      $module_ids = implode(',', $arr_modules);
+
+      $sql = "DELETE FROM {$this->wpdb->prefix}stm_lms_user_courses 
+              WHERE user_id = {$id_user} 
+              AND course_id IN ( {$module_ids} )";
+
+      return $this->wpdb->query($sql);
+    }
+
 }

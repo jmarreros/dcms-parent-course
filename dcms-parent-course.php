@@ -18,6 +18,7 @@ use dcms\parent\includes\Plugin;
 use dcms\parent\includes\Submenu;
 use dcms\parent\includes\Enqueue;
 use dcms\parent\includes\Configuration;
+use dcms\parent\includes\Process;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -36,9 +37,10 @@ final class Loader{
 		define ('DCMS_PARENT_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_PARENT_SUBMENU', 'options-general.php');
 
-    // Special product multiprices or flexible prices - plugin name prices
-		define ('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES', 'dcms-parent-product-multi-prices');
-
+		// Special product multiprices or flexible prices - plugin name prices
+		if ( ! defined('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES') ) {
+			define('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES', 'dcms-parent-product-multi-prices');
+		}
 	}
 
 	// Load all the files we need
@@ -49,6 +51,7 @@ final class Loader{
 		include_once ( DCMS_PARENT_PATH . '/includes/enqueue.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/database.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/configuration.php');
+		include_once ( DCMS_PARENT_PATH . '/includes/process.php');
 
     // Back-end
 		include_once ( DCMS_PARENT_PATH . '/back-end/metabox-parent-course.php');
@@ -84,6 +87,7 @@ final class Loader{
 		new SubMenu;
 		new Enqueue;
 		new Configuration;
+		new Process;
 	}
 
 }
