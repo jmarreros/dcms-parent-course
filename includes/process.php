@@ -7,6 +7,8 @@ use dcms\parent\includes\Database;
 // TODO, no hay un hook para eliminación manual de estudiante curso, 
 // hay que hacer una opción de regularización para los módulos que no queden huérfanos
 
+// Sólo se muestran los cursos con id_parent = 0, esto ya esta por defecto del propio plugin LMS
+
 class Process{
 
     public function __construct(){
@@ -57,12 +59,4 @@ class Process{
 
 }
 
-
-// add_action('stm_lms_woocommerce_order_approved', [$this, 'add_user_modules_course_woo'], 10, 2);
-
-// public function add_user_modules_course_woo($course, $user_id){
-//     error_log(print_r('Ingreso a add_user_modules_course_woo', true));
-//     error_log(print_r($user_id, true));
-//     error_log(print_r($course, true));
-// }
 

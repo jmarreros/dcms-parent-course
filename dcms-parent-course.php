@@ -19,6 +19,7 @@ use dcms\parent\includes\Submenu;
 use dcms\parent\includes\Enqueue;
 use dcms\parent\includes\Configuration;
 use dcms\parent\includes\Process;
+use dcms\parent\includes\Courses;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -52,11 +53,12 @@ final class Loader{
 		include_once ( DCMS_PARENT_PATH . '/includes/database.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/configuration.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/process.php');
+		include_once ( DCMS_PARENT_PATH . '/includes/courses.php');
 
-    // Back-end
+    	// Back-end
 		include_once ( DCMS_PARENT_PATH . '/back-end/metabox-parent-course.php');
 
-    // Front-end
+    	// Front-end
 		include_once ( DCMS_PARENT_PATH . '/front-end/courses-product.php');
 	}
 
@@ -88,6 +90,7 @@ final class Loader{
 		new Enqueue;
 		new Configuration;
 		new Process;
+		new Courses;
 	}
 
 }

@@ -27,7 +27,7 @@ function dcms_add_metabox_parent_content( $post ){
   ?>
   <br>
     <select name="parent-course">
-      <option value="">Ninguno</option>
+      <option value="0">Ninguno</option>
       <?php foreach ($courses as $course): ?>
         <option value="<?= $course->ID ?>" <?php selected($parent_id, $course->ID) ?> ><?= $course->post_title ?></option>
       <?php endforeach; ?>

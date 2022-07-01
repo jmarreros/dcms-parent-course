@@ -20,7 +20,7 @@ $module_url = admin_url() . 'post.php?post=';
       <?php foreach ($courses_modules as $key => $item): ?>
         <tr>
           <td><a href="<?= $course_url.$item->course_id ?>&action=edit" target="_blank"><?= $item->course_title ?></a></td>
-          <td><a href="<?= $module_url.$item->module_id ?>&action=edit" target="_blank"><?php echo $key + 1; ?> - <?= $item->module_title ?></a></td>
+          <td><a href="<?= $module_url.$item->module_id ?>&action=edit" target="_blank"><?= $item->module_title ?></a></td>
         </tr>
       <?php endforeach; ?>
     </table>
