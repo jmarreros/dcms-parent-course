@@ -97,7 +97,7 @@ class Database{
       return $this->wpdb->get_col($sql);
     }
 
-    // Validate if a usar has a specific module assigned
+    // Validate if a user has a specific module assigned, for validate not inserted again
     public function user_has_module($id_user, $id_module){
       $sql = "SELECT count(user_course_id) 
               FROM {$this->wpdb->prefix}stm_lms_user_courses 

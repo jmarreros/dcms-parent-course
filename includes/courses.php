@@ -1,9 +1,10 @@
 <?php
-
 namespace dcms\parent\includes;
 
+use dcms\parent\includes\Database;
+
 // Class to filter courses in client area
-// El plugin LMS por defecto ya muestra los cursos de primer nivel por defecto (id_parent = 0)
+// El plugin LMS por defecto ya muestra sólo los cursos de primer nivel por defecto (id_parent = 0)
 class Courses{
 
   public function __construct(){
@@ -12,15 +13,20 @@ class Courses{
 
   // Exclude modules courses, parent_id <> 0 
   public function exclude_modules_courses($res){
+    $db = new Database;
+    $i = 0;
+    while( count($res['posts']) > $i ) {
+        $id_course = $res['posts'][$i]['id'];
+        $id_parent = $db->get_parent_course($id_course);
 
-    // TODO, revisión exclusión módulos
-
-    error_log(print_r('Aqui 🚀', true));
-    array_splice($res['posts'], 1, 1);
-    error_log(print_r($res, true));
-        
+        // if is a module, we have to remove
+        if ( intval($id_parent) !== 0 ){
+            array_splice($res['posts'], $i, 1);
+        } else {
+            $i++;
+        }
+    }
     return $res;
   }
-
 
 }
