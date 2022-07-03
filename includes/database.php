@@ -63,12 +63,16 @@ class Database{
     }
 
     // List courses with modules
-    public function list_courses_and_modules(){
+    public function list_courses_and_modules($id_course = 0){
+      $course_condition = '';
+      if ( $id_course !== 0 ) $course_condition = " AND pp.ID = {$id_course} ";
+
       $sql = "SELECT pp.ID course_id, pp.post_title course_title,
                     pm.ID module_id, pm.post_title module_title
               FROM {$this->wpdb->posts} pp
               INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
               WHERE pp.post_type = 'stm-courses'
+                    {$course_condition}
                     AND pm.post_type = 'stm-courses'
                     AND pm.post_status = 'publish'
               ORDER BY course_title, module_title";
@@ -143,4 +147,15 @@ class Database{
       return $this->wpdb->get_col($sql);
     }
 
+    // Get course from lesson, lesson should be unique for a parent course
+    public function get_course_from_lesson($id_lesson){
+      $sql = "SELECT course_id 
+              FROM {$this->wpdb->prefix}stm_lms_curriculum_bind  c
+              INNER JOIN {$this->wpdb->posts} p ON p.ID = c.course_id
+              WHERE c.item_id = {$id_lesson}
+              AND p.post_status = 'publish'
+              LIMIT 1";
+
+      return $this->wpdb->get_var($sql);
+    }
 }

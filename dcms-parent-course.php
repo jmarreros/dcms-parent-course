@@ -60,6 +60,7 @@ final class Loader{
 
     	// Front-end
 		include_once ( DCMS_PARENT_PATH . '/front-end/courses-product.php');
+		include_once ( DCMS_PARENT_PATH . '/front-end/shortcode.php');
 	}
 
 	// Load tex domain
