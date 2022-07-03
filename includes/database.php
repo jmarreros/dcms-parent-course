@@ -70,6 +70,7 @@ class Database{
               INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
               WHERE pp.post_type = 'stm-courses'
                     AND pm.post_type = 'stm-courses'
+                    AND pm.post_status = 'publish'
               ORDER BY course_title, module_title";
 
       return $this->wpdb->get_results($sql);
@@ -92,7 +93,8 @@ class Database{
               INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
               WHERE pp.ID = {$id_course} 
               AND pp.post_type = 'stm-courses'
-              AND pm.post_type = 'stm-courses'";
+              AND pm.post_type = 'stm-courses'
+              AND pm.post_status = 'publish'";
 
       return $this->wpdb->get_col($sql);
     }
@@ -115,6 +117,30 @@ class Database{
               AND course_id IN ( {$module_ids} )";
 
       return $this->wpdb->query($sql);
+    }
+
+    // Exists users without new module in a course
+    public function exists_users_without_new_module($id_course){
+      $sql = "SELECT COUNT(m.ID)
+              FROM {$this->wpdb->posts} m 
+              LEFT JOIN {$this->wpdb->prefix}stm_lms_user_courses uc 
+                ON m.ID = uc.course_id
+              WHERE m.post_parent = {$id_course} 
+                AND m.post_type = 'stm-courses' 
+                AND m.post_status = 'publish'
+                AND uc.user_id IS NULL";
+
+      return $this->wpdb->get_var($sql) > 0;
+    }
+
+    // Get all users with a specific course
+    public function get_users_course($id_course){
+      $sql = "SELECT user_id 
+              FROM {$this->wpdb->prefix}stm_lms_user_courses 
+              WHERE course_id = {$id_course}
+              AND status = 'enrolled'";
+
+      return $this->wpdb->get_col($sql);
     }
 
 }

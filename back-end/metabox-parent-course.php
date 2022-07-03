@@ -2,8 +2,8 @@
 // Muestra un metabox en los cursos que son módulos para seleccionar el curso padre
 // Los cursos padres mostrados excluyen otros módulos
 
-use dcms\parent\helpers\Helper;
 use dcms\parent\includes\Database;
+use dcms\parent\includes\Process;
 
 add_action( 'add_meta_boxes', 'dcms_add_metabox_parent_course' );
 function dcms_add_metabox_parent_course(){
@@ -41,7 +41,15 @@ function dcms_save_metabox_parent_content( $post_id, $post ){
 
     $parent_id = $_POST['parent-course']??0;
 
+    // Save metabox
     $db = new Database;
     $db->save_module_parent_course($post_id, $parent_id);
+
+    // Update users course with new module
+    // TODO: If parent_id = 0, remove
+    if ( $db->exists_users_without_new_module($parent_id) ) {
+      $process = new Process;
+      $process->update_user_course_without_module($parent_id);  
+    }
 }
 

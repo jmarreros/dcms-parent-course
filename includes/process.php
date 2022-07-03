@@ -9,6 +9,7 @@ use dcms\parent\includes\Database;
 
 // Sólo se muestran los cursos con id_parent = 0, esto ya esta por defecto del propio plugin LMS
 
+// TODO, hacer un proceso de regularización de modulos, cuando se cambia el curso padre o se establece a ninguno, por ejemplo
 class Process{
 
     public function __construct(){
@@ -55,6 +56,16 @@ class Process{
 
         $current_students = $add ? $current_students + 1 : $current_students - 1;
         update_post_meta($course_id, 'current_students', $current_students);
+    }
+
+    // To sync new module for users who has the course
+    public function update_user_course_without_module($id_course){
+        $db = new Database;        
+        $ids_user = $db->get_users_course($id_course);
+
+        foreach ($ids_user as $id_user) {
+            $this->add_user_modules_course($id_user, $id_course);
+        }
     }
 
 }
