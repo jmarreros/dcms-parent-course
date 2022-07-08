@@ -1,7 +1,7 @@
 (function( $ ) {
 	'use strict';
 
-  // Save cron syn advanced configuration
+  // Save id product
   $('#id-product-section .button').click(function(e){
     e.preventDefault();
 

@@ -2,7 +2,7 @@
 // $id_product
 ?>
 <section id="section-config">
-    <br>
+<h2>Producto precio variable</h2>
     <table class="form-table id-product-section">
             <tbody>
                 <tr id="id-product-section">
@@ -20,4 +20,14 @@
                 </tr>
             </tbody>
     </table>
+</section>
+
+
+<section>
+<h2>Shortcode</h2>
+<p>
+Usar el siguiente shortcode en la lección de un curso para ver la lista de módulos que tiene el curso:
+<strong>[mostrar_modulos]</strong>
+</p>
+
 </section>

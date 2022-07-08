@@ -7,6 +7,7 @@ class Enqueue{
 
     public function __construct(){
         add_action('admin_enqueue_scripts', [$this, 'register_scripts_backend']);
+        add_action('wp_enqueue_scripts', [$this, 'register_scripts_front_end']);
     }
 
     // Backend scripts
@@ -36,4 +37,17 @@ class Enqueue{
         wp_enqueue_style('parent-style');
     }
 
+
+    function register_scripts_front_end(){
+        wp_register_script('shortcode-script',
+                            DCMS_PARENT_URL.'front-end/assets/shortcode.js',
+                            ['jquery'],
+                            DCMS_PARENT_VERSION,
+                            true);
+        wp_localize_script('shortcode-script',
+                        'dcms_parent',
+                            [ 'ajaxurl'=>admin_url('admin-ajax.php'),
+                                'parent' => wp_create_nonce('ajax-nonce-parent')
+                            ]);
+    }
 }

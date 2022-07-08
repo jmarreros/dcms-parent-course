@@ -158,4 +158,19 @@ class Database{
 
       return $this->wpdb->get_var($sql);
     }
+
+    // Get percent modules by user course
+    public function get_percent_module_user_course($id_course, $id_user){
+      $id_modules = implode( ',', $this->get_modules_by_course($id_course) );
+
+      if ( ! empty($id_modules) ){
+        $sql = "SELECT p.ID module_id, p.post_title title, uc.progress_percent 
+                FROM {$this->wpdb->prefix}stm_lms_user_courses uc
+                INNER JOIN {$this->wpdb->prefix}posts p ON uc.course_id = p.ID
+                WHERE uc.user_id = {$id_user} AND uc.course_id IN ( {$id_modules} )";
+        
+        return $this->wpdb->get_results($sql);
+      }
+      return false;
+    }
 }
