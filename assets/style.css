@@ -45,7 +45,6 @@ body .hide {
   display: none;
 }
 
-
   /* CSS spin*/
 
 .dcms-spin {
@@ -74,3 +73,17 @@ body .hide {
 }
 
 
+.order-module{
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.order-module input{
+  width: 100px;
+}
+
+.order-module label{
+  width: 50px;
+  margin-right: 10px;
+}

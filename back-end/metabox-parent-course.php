@@ -24,6 +24,7 @@ function dcms_add_metabox_parent_content( $post ){
   $db = new Database;
   $courses = $db->get_courses();
   $parent_id = $db->get_parent_course($post->ID);
+  $order_module = get_post_meta($post->ID, 'order-module', true);
   ?>
   <br>
     <select name="parent-course">
@@ -32,6 +33,10 @@ function dcms_add_metabox_parent_content( $post ){
         <option value="<?= $course->ID ?>" <?php selected($parent_id, $course->ID) ?> ><?= $course->post_title ?></option>
       <?php endforeach; ?>
     </select>
+  <div class="order-module">
+  <label>Orden</label>
+  <input type="number" value="<?= $order_module ?>" name="order-module">
+  </div>
   <?php
 }
 
@@ -40,10 +45,12 @@ function dcms_save_metabox_parent_content( $post_id, $post ){
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 
     $parent_id = $_POST['parent-course']??0;
+    $order_module = $_POST['order-module']??0;
 
     // Save metabox
     $db = new Database;
     $db->save_module_parent_course($post_id, $parent_id);
+    update_post_meta($post_id, 'order-module', $order_module);
 
     // Update users course with new module
     // TODO: If parent_id = 0, remove

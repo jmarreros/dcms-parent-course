@@ -68,14 +68,16 @@ class Database{
       if ( $id_course !== 0 ) $course_condition = " AND pp.ID = {$id_course} ";
 
       $sql = "SELECT pp.ID course_id, pp.post_title course_title,
-                    pm.ID module_id, pm.post_title module_title
+                    pm.ID module_id, pm.post_title module_title,
+                    pmm.meta_value order_module
               FROM {$this->wpdb->posts} pp
               INNER JOIN {$this->wpdb->posts} pm ON pp.ID = pm.post_parent
+              LEFT JOIN {$this->wpdb->postmeta} pmm ON pm.ID = pmm.post_id AND pmm.meta_key = 'order-module'
               WHERE pp.post_type = 'stm-courses'
                     {$course_condition}
                     AND pm.post_type = 'stm-courses'
                     AND pm.post_status = 'publish'
-              ORDER BY course_title, module_title";
+              ORDER BY course_title, CAST(order_module AS unsigned)";
 
       return $this->wpdb->get_results($sql);
     }
