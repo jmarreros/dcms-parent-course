@@ -20,13 +20,23 @@ class Courses{
         $id_course = $res['posts'][$i]['id'];
         $id_parent = $db->get_parent_course($id_course);
 
-        // if is a module, we have to remove
-        if ( intval($id_parent) !== 0 ){
+        // if is a module and user has the complete course, we have to remove
+        if ( intval($id_parent) !== 0 &&  $this->user_has_course($id_parent) ){
             array_splice($res['posts'], $i, 1);
         } else {
             $i++;
         }
     }
     return $res;
+  }
+
+  // Validate if a user has a course o only has a individual module
+  private function user_has_course($id_course){
+    $db = new Database;
+    $id_user = get_current_user_id();
+
+    $count = $db->user_has_course($id_user, $id_course);
+    
+    return intval($count) > 0;
   }
 }

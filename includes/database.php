@@ -67,7 +67,7 @@ class Database{
       $course_condition = '';
       if ( $id_course !== 0 ) $course_condition = " AND pp.ID = {$id_course} ";
 
-      $sql = "SELECT pp.ID course_id, pp.post_title course_title,
+      $sql = "SELECT DISTINCT pp.ID course_id, pp.post_title course_title,
                     pm.ID module_id, pm.post_title module_title,
                     pmm.meta_value order_module
               FROM {$this->wpdb->posts} pp
@@ -112,6 +112,11 @@ class Database{
               WHERE user_id = {$id_user} AND course_id = {$id_module}";
 
       return $this->wpdb->get_var($sql);
+    }
+
+    // Alias, validate is a user has a specific course
+    public function user_has_course($id_user, $id_course){
+      return $this->user_has_module($id_user, $id_course);
     }
 
     // Remove course modules for a user
