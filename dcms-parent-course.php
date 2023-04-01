@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Loader{
 
 	// Define all the constants we need
-	public function define_constants(){
+	public function define_constants(): void {
 		define ('DCMS_PARENT_VERSION', '1.0');
 		define ('DCMS_PARENT_PATH', plugin_dir_path( __FILE__ ));
 		define ('DCMS_PARENT_URL', plugin_dir_url( __FILE__ ));
@@ -45,7 +45,7 @@ final class Loader{
 	}
 
 	// Load all the files we need
-	public function load_includes(){
+	public function load_includes(): void {
 		include_once ( DCMS_PARENT_PATH . '/helpers/helper.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/plugin.php');
 		include_once ( DCMS_PARENT_PATH . '/includes/submenu.php');
@@ -81,7 +81,7 @@ final class Loader{
 	}
 
 	// Initialize all
-	public function init(){
+	public function init(): void {
 		$this->define_constants();
 		$this->load_includes();
 		$this->load_domain();

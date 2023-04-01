@@ -14,7 +14,7 @@ function dcms_build_select_courses(){
   if ( $product->get_id() !== $id_product  ) return;
 
   $db = new Database();
-  $courses = $db->get_courses();
+  $courses = $db->get_aviable_courses();
   $options = [ "0"  => 'Seleccionar'];
 
   foreach ($courses as $course) {
