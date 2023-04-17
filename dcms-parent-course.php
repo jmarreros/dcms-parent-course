@@ -38,6 +38,9 @@ final class Loader{
 		define ('DCMS_PARENT_BASE_NAME', plugin_basename( __FILE__ ));
 		define ('DCMS_PARENT_SUBMENU', 'options-general.php');
 
+		// Conditional defined MAX_DATE constant
+		defined('MAX_DATE') or define('MAX_DATE', '2100-01-01');
+
 		// Special product multiprices or flexible prices - plugin name prices
 		if ( ! defined('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES') ) {
 			define('DCMS_PARENT_ID_PRODUCT_MULTI_PRICES', 'dcms-parent-product-multi-prices');

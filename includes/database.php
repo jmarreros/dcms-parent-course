@@ -24,6 +24,7 @@ class Database {
 
 	// Get parent courses, exclude modules courses
 	public function get_aviable_courses() {
+
 		$sql = "SELECT DISTINCT p.ID, p.post_title
               FROM {$this->wpdb->posts} p
               INNER JOIN {$this->wpdb->postmeta} pm ON p.ID = pm.post_id
@@ -31,7 +32,8 @@ class Database {
                 AND p.post_parent = 0
                 AND p.post_status = 'publish'
                 AND pm.meta_key =  '" . DCM_COURSE_DATE . "'
-                AND STR_TO_DATE(pm.meta_value, '%Y-%m-%d') >= NOW()
+                AND STR_TO_DATE(pm.meta_value, '%Y-%m-%d') >= CURDATE()
+                AND STR_TO_DATE(pm.meta_value, '%Y-%m-%d') < '" . MAX_DATE . "'
               ORDER BY p.post_title";
 
 		return $this->wpdb->get_results( $sql );
