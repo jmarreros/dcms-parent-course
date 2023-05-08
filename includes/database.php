@@ -39,6 +39,24 @@ class Database {
 		return $this->wpdb->get_results( $sql );
 	}
 
+	
+	// Get courses from 2 months ago for a specific user
+	public function get_recent_courses_user( $user ){
+		$months_time = 60*24*60*60; // 2 months timestamp
+		
+		$sql = "SELECT uc.course_id, c.post_title 
+				FROM {$this->wpdb->prefix}stm_lms_user_courses uc
+				INNER JOIN {$this->wpdb->posts} c ON uc.course_id = c.ID
+				WHERE uc.user_id = $user
+				AND c.post_type = 'stm-courses'
+                AND c.post_parent = 0
+                AND c.post_status = 'publish'
+				AND UNIX_TIMESTAMP() < uc.start_time + $months_time";
+
+		return $this->wpdb->get_results( $sql );
+	}
+	
+	
 
 	// Get specific course by id
 	public function get_course( $course_id ) {
