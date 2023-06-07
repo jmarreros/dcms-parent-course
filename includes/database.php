@@ -56,7 +56,6 @@ class Database {
 		return $this->wpdb->get_results( $sql );
 	}
 	
-	
 
 	// Get specific course by id
 	public function get_course( $course_id ) {

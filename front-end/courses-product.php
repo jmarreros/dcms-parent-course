@@ -16,21 +16,26 @@ function dcms_build_select_courses() {
 	}
 
 	$db      = new Database();
-	$courses = $db->get_aviable_courses();
-	$options = [ "0" => 'Seleccionar' ];
 
-	foreach ( $courses as $course ) {
-		$options[ $course->ID ] = $course->post_title;
-	}
+    $only_own_courses = intval($_GET['own']??0);
 
-	// Agregar los cursos que el usuario pago por pago flexible ya que aún no hayan pasado 2 meses
-	$user_id = get_current_user_id();
-	if ( $user_id ) {
-		$courses_user = $db->get_recent_courses_user( $user_id );
-		foreach ( $courses_user as $course ) {
-			$options[ $course->course_id ] = $course->post_title;
-		}
-	}
+    $options = [ "0" => 'Seleccionar' ];
+
+    if ( $only_own_courses ) {
+        $user_id = get_current_user_id();
+        if ( $user_id ) {
+            $courses_user = $db->get_recent_courses_user( $user_id );
+            foreach ( $courses_user as $course ) {
+                $options[ $course->course_id ] = $course->post_title;
+            }
+        }
+    } else { // list only new courses
+        $courses = $db->get_aviable_courses();
+        foreach ( $courses as $course ) {
+            $options[ $course->ID ] = $course->post_title;
+        }
+    }
+
 
 	woocommerce_form_field( 'course', array(
 		'type'     => 'select',
