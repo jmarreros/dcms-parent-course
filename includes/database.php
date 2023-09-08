@@ -40,9 +40,10 @@ class Database {
 	}
 
 	
-	// Get courses from 2 months ago for a specific user
+	// Get courses from X months ago for a specific user
 	public function get_recent_courses_user( $user ){
-		$months_time = 60*24*60*60; // 2 months timestamp
+		$months = 5; // Months ago
+		$months_time = $months*30*24*60*60; // timestamp
 		
 		$sql = "SELECT uc.course_id, c.post_title 
 				FROM {$this->wpdb->prefix}stm_lms_user_courses uc
